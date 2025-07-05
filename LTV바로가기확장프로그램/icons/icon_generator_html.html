@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>웨일 확장프로그램 아이콘 생성기</title>
+    <style>
+        body {
+            font-family: 'Noto Sans KR', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            margin: 0;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        h1 {
+            margin-bottom: 30px;
+        }
+        
+        .icon-preview {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        
+        .icon-size {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .icon-size h3 {
+            margin-top: 0;
+        }
+        
+        canvas {
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            background: white;
+        }
+        
+        .download-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .download-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .instructions {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+            text-align: left;
+        }
+        
+        .step {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .step:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #FFE082;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🐋 웨일 확장프로그램 아이콘 생성기</h1>
+        <p>아래 버튼들을 클릭하여 각 크기별 아이콘을 다운로드하세요.</p>
+        
+        <div class="icon-preview">
+            <div class="icon-size">
+                <h3>16×16px</h3>
+                <canvas id="canvas16" width="16" height="16"></canvas>
+                <br>
+                <button class="download-btn" onclick="downloadIcon(16)">icon16.png 다운로드</button>
+            </div>
+            
+            <div class="icon-size">
+                <h3>48×48px</h3>
+                <canvas id="canvas48" width="48" height="48"></canvas>
+                <br>
+                <button class="download-btn" onclick="downloadIcon(48)">icon48.png 다운로드</button>
+            </div>
+            
+            <div class="icon-size">
+                <h3>128×128px</h3>
+                <canvas id="canvas128" width="128" height="128"></canvas>
+                <br>
+                <button class="download-btn" onclick="downloadIcon(128)">icon128.png 다운로드</button>
+            </div>
+        </div>
+        
+        <div class="instructions">
+            <h2>📝 사용 방법</h2>
+            <div class="step">각 크기별 다운로드 버튼을 클릭하여 PNG 파일을 저장하세요.</div>
+            <div class="step">다운로드된 파일들을 확장프로그램 폴더의 <code>icons/</code> 폴더에 저장하세요.</div>
+            <div class="step">파일명은 정확히 <code>icon16.png</code>, <code>icon48.png</code>, <code>icon128.png</code>이어야 합니다.</div>
+            <div class="step">웨일 브라우저에서 확장프로그램을 다시 로드하세요.</div>
+        </div>
+    </div>
+
+    <script>
+        // SVG 아이콘 데이터
+        const svgContent = `
+        <svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#4A90E2;stop-opacity:1" />
+              <stop offset="50%" style="stop-color:#7B68EE;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#9B59B6;stop-opacity:1" />
+            </linearGradient>
+            
+            <linearGradient id="whaleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#FFFFFF;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#E3F2FD;stop-opacity:1" />
+            </linearGradient>
+            
+            <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+              <feDropShadow dx="2" dy="2" stdDeviation="3" flood-opacity="0.3"/>
+            </filter>
+          </defs>
+          
+          <circle cx="64" cy="64" r="58" fill="url(#bgGradient)" stroke="#FFFFFF" stroke-width="4" filter="url(#shadow)"/>
+          
+          <ellipse cx="64" cy="68" rx="35" ry="20" fill="url(#whaleGradient)" opacity="0.9"/>
+          <ellipse cx="45" cy="60" rx="15" ry="12" fill="url(#whaleGradient)" opacity="0.9"/>
+          <circle cx="42" cy="58" r="2" fill="#2C3E50"/>
+          <ellipse cx="38" cy="52" rx="3" ry="1.5" fill="#5DADE2" opacity="0.7"/>
+          
+          <circle cx="38" cy="45" r="1.5" fill="#5DADE2" opacity="0.8"/>
+          <circle cx="36" cy="40" r="1" fill="#5DADE2" opacity="0.6"/>
+          <circle cx="40" cy="38" r="0.8" fill="#5DADE2" opacity="0.5"/>
+          
+          <path d="M 85 70 Q 95 65 100 58 Q 95 72 85 75 Z" fill="url(#whaleGradient)" opacity="0.9"/>
+          <path d="M 85 70 Q 95 75 100 82 Q 95 68 85 65 Z" fill="url(#whaleGradient)" opacity="0.9"/>
+          
+          <g transform="translate(75, 45) scale(0.8)">
+            <path d="M 0 8 L 8 0 L 16 8 L 16 16 L 0 16 Z" fill="#FFE082" stroke="#FFC107" stroke-width="1"/>
+            <rect x="6" y="10" width="4" height="6" fill="#8D6E63"/>
+            <polygon points="0,8 8,0 16,8" fill="#FF7043"/>
+          </g>
+          
+          <g transform="translate(20, 80) scale(0.8)">
+            <rect x="0" y="12" width="3" height="4" fill="#4CAF50"/>
+            <rect x="4" y="8" width="3" height="8" fill="#2196F3"/>
+            <rect x="8" y="4" width="3" height="12" fill="#FF9800"/>
+            <rect x="12" y="0" width="3" height="16" fill="#F44336"/>
+          </g>
+          
+          <text x="64" y="100" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#FFFFFF">LTV</text>
+          <text x="64" y="115" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#FFFFFF" opacity="0.8">KB</text>
+        </svg>`;
+
+        // 페이지 로드 시 아이콘 생성
+        window.addEventListener('DOMContentLoaded', function() {
+            generateIcons();
+        });
+
+        function generateIcons() {
+            [16, 48, 128].forEach(size => {
+                const canvas = document.getElementById(`canvas${size}`);
+                const ctx = canvas.getContext('2d');
+                
+                // SVG를 이미지로 변환
+                const img = new Image();
+                const svgBlob = new Blob([svgContent], {type: 'image/svg+xml'});
+                const url = URL.createObjectURL(svgBlob);
+                
+                img.onload = function() {
+                    ctx.clearRect(0, 0, size, size);
+                    ctx.drawImage(img, 0, 0, size, size);
+                    URL.revokeObjectURL(url);
+                };
+                
+                img.src = url;
+            });
+        }
+
+        function downloadIcon(size) {
+            const canvas = document.getElementById(`canvas${size}`);
+            const link = document.createElement('a');
+            link.download = `icon${size}.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+    </script>
+</body>
+</html>
