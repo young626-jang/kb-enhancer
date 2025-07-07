@@ -1,0 +1,52 @@
+{
+  "manifest_version": 3,
+  "name": "LTV계산기 + KB시세 바로가기 (MV3)",
+  "version": "3.0.1",
+  "description": "LTV계산기 바로가기 및 텍스트 선택으로 KB시세 자동 검색 - Manifest V3 버전",
+  
+  "permissions": [
+    "contextMenus",
+    "tabs",
+    "activeTab",
+    "scripting",
+    "clipboardWrite",
+    "clipboardRead"
+  ],
+  
+  "host_permissions": [
+    "*://kbland.kr/*",
+    "*://ltv-flask-young.onrender.com/*"
+  ],
+  
+  "background": {
+    "service_worker": "background.js"
+  },
+  
+  "content_scripts": [
+    {
+      "matches": ["*://kbland.kr/*"],
+      "js": ["content.js"],
+      "run_at": "document_end"
+    }
+  ],
+  
+  "commands": {
+    "ltv-shortcut": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+L"
+      },
+      "description": "LTV계산기 바로가기"
+    },
+    "kb-shortcut": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+K"
+      },
+      "description": "선택된 텍스트로 KB시세 검색"
+    }
+  },
+  
+  "action": {
+    "default_title": "LTV계산기 + KB시세 바로가기",
+    "default_popup": "popup.html"
+  }
+}
